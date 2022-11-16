@@ -1,0 +1,137 @@
+<div id="Modalsell" class="modal fade leadform-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Sell Equipment</h4>
+            </div>
+            <div class="modal-body">
+                <div>{{header.texts.sell_leadform_text|safe}} </div>
+                <form class="leadform">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-6 col-xs-12">
+                                <input type="text" class="form-control manditory" data-valid="not_empty" name="name" placeholder="Name*">
+                            </div>
+                            <div class="col-sm-6 col-xs-12">
+                                <input type="text" class="form-control manditory" name="email" data-valid="not_empty|email" placeholder="Email*">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 col-xs-12">
+                                <input type="text" class="form-control manditory" name="phone" data-valid="not_empty|cellnum" placeholder="Phone*">
+                            </div>
+                            <div class="col-sm-6 col-xs-12">
+                                <select class="form-control" name="seller_type">
+                                    <option value="" disabled selected>Which of these best describes you?</option>
+                                    {% for seller_type in leadchoices.seller.seller_type%}
+                                    <option value="{{seller_type.0}}">{{seller_type.1}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 col-xs-12">
+                                <input type="text" data-auname="state" class="form-control" placeholder="State">
+                                <input type="hidden" name="state" class="form-control" placeholder="State">
+                            </div>
+                            <div class="col-sm-6 col-xs-12">
+                                <input type="text" data-auname="country" class="form-control" placeholder="Country">
+                                <input type="hidden" name="country" class="form-control" placeholder="Country">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 col-xs-12">
+                                <textarea name="address" class="form-control" rows="3" placeholder="Address"></textarea>
+                            </div>
+                            <div class="col-sm-6 col-xs-12">
+                                <textarea name="message" class="form-control" rows="3" placeholder="Message"></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 col-xs-12">
+                                <input type="text" class="form-control" name="seller_manufacturer_details" placeholder="Manufacturer Details">
+                            </div>
+                            <div class="col-sm-6 col-xs-12">
+                                <input type="text" class="form-control" name="seller_model_details" placeholder="Model Details">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 col-xs-12">
+                                <input type="text" class="form-control manditory" data-valid="maxlen=15" name="seller_manufacture_date" placeholder="Date of Manufacture">
+                            </div>
+                            <div class="col-sm-6 col-xs-12">
+                                <select class="form-control" name="project_timing">
+                                    <option value="" disabled selected>Project Timing</option>
+                                    {% for timing in leadchoices.seller.project_timing%}
+                                    <option value="{{timing.0}}">{{timing.1}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 col-xs-12">
+                              <p>Describe Your Imaging Project and Reason for Sale</p>
+                            </div>
+                            <div class="col-sm-6 col-xs-12">
+                                <textarea class="form-control" id="exampleTextarea" name="seller_reason_for_sale" rows="3" placeholder=""></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 col-xs-12">
+                                <p>Modality</p>
+                                <div class="custom-controls-stacked">
+                                    <label class="custom-control custom-radio">
+                                        <input id="radioStacked1" name="seller_modality" type="radio" value="CT" class="custom-control-input">
+                                        <span class="custom-control-indicator"></span>
+                                        <span class="custom-control-description">CT</span>
+                                    </label>
+                                    <label class="custom-control custom-radio">
+                                        <input id="radioStacked2" name="seller_modality" type="radio" value="MRI" class="custom-control-input">
+                                        <span class="custom-control-indicator"></span>
+                                        <span class="custom-control-description">MRI</span>
+                                    </label>
+                                    <label class="custom-control custom-radio">
+                                        <input id="radioStacked2" name="seller_modality" type="radio" value="others" class="custom-control-input">
+                                        <span class="custom-control-indicator"></span>
+                                        <span class="custom-control-description">Others</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-xs-12">
+                                <p>Functional</p>
+                                <div class="custom-controls-stacked">
+                                    <label class="custom-control custom-radio">
+                                        <input id="radioStacked1" name="is_functional" type="radio" value="yes" class="custom-control-input">
+                                        <span class="custom-control-indicator"></span>
+                                        <span class="custom-control-description">Yes</span>
+                                    </label>
+                                    <label class="custom-control custom-radio">
+                                        <input id="radioStacked2" name="is_functional" type="radio" value="no" class="custom-control-input">
+                                        <span class="custom-control-indicator"></span>
+                                        <span class="custom-control-description">No</span>
+                                    </label>
+                                    <label class="custom-control custom-radio">
+                                        <input id="radioStacked2" name="is_functional" type="radio" value="ins" class="custom-control-input">
+                                        <span class="custom-control-indicator"></span>
+                                        <span class="custom-control-description">Installed</span>
+                                    </label>
+                                    <label class="custom-control custom-radio">
+                                        <input id="radioStacked2" name="is_functional" type="radio" value="others" class="custom-control-input">
+                                        <span class="custom-control-indicator"></span>
+                                        <span class="custom-control-description">Others</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" name="lead_type" value="seller">
+                    </div>
+                  <div class="modal-footer">
+                      <button type="submit" class="btn green_button">Send Now!</button>
+                  </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

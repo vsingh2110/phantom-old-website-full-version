@@ -1,0 +1,7 @@
+*.pyc
+*.vi
+*.swp
+media/uploads
+media/
+static/
+

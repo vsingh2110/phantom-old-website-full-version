@@ -1,0 +1,240 @@
+{% extends "shared/baselayout.html" %}
+{% load static from staticfiles %}
+{%  block css %}
+    <link type="text/css" href="{% static 'css/jquery.bsPhotoGallery.css'%}" rel="stylesheet">
+    <link type="text/css" href="{% static 'css/college-compare-widget.css'%}" rel="stylesheet">
+    <style>
+        .product-gallery li{
+            list-style:none;
+            padding:0;
+        }
+        .product-gallery .texti{
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap
+        }
+    </style>
+
+{% endblock css %}
+{% block js %}
+        <script type="text/javascript" src="{% static 'js/jquery.bsPhotoGallery.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/comparebox.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/store.min.js' %}"></script>
+    <script>
+    ;(function(){
+        $('.download-btn').on('click',function(e){
+            e.preventDefault();
+            var url = $(this).attr('href');
+            if(url){
+                window.leadcallback = function(){
+                    window.location.href=url;
+                    window.leadcallback=null;
+                }
+            }
+            if(hasSubmittedLead()){
+                window.leadcallback()
+            }
+            else{
+                $('#myModal').modal('show');
+            }
+        }); 
+        CompareBox.loaddata();
+        $('.compare').on('click',function(e){
+            e.preventDefault();
+            var $this = $(this);
+            var block = $this.closest('.js-block');
+            var data = {
+                id:block.data('id'),
+                slug:block.data('slug'),
+                name:block.data('name'),
+                image:block.data('image')
+            }
+            CompareBox.add(data);
+            CompareBox.show();
+        })
+
+          $('ul.product-gallery').bsPhotoGallery({
+            "classes" : "col-lg-2 col-md-4 col-sm-3 col-xs-4 col-xxs-12",
+            "hasModal" : true
+          });
+    })();
+    </script>
+
+{% endblock js %}
+
+{% block body %}
+<!-- Breadcrum Starts-->
+<div class="container-fluid Breadcrum">
+    <div class="container">
+        <div class="row">
+            <h1 class="col-sm-5 col-ld-5 col-xs-12">{{product.name}}
+                <span class="caret_down"></span>
+            </h1>
+            <!--<ul class="col-sm-5 col-ld-5 col-xs-12">
+                <li>
+                    <a href="index.html">Home  </a>
+                </li>
+            / product name
+            </ul>-->
+        </div>
+    </div>
+</div>
+<!-- Breadcrum ends-->
+<div class="container-fluid greybg">
+    <div class="container white js-block" data-slug="{{product.slug}}" data-name="{{product.name}}" data-image="{{product.main_image}}" data-id="{{product.id}}">
+        <div class="row">
+            <div class="col-sm-6 col-ld-6 col-xs-12 productImage">
+                <img src="{{product.main_image}}" alt="" class="img-responsive ">
+            </div>
+            <div class="col-sm-6 col-ld-6 col-xs-12 ProductDetail">
+                <h2>{{product.name}}</h2>
+                <div>{{product.description|safe}} </div>
+                <div class="buttons">
+		    {% if product.brochure %}
+                    <span class="green_button brochure">
+                        <a href="{{product.brochure}}" class="download-btn"><i></i>Download Brochure</a>
+                    </span>
+		    {% endif %}
+                    <span class="green_button compare">
+                        <a href="#"><i></i>Compare</a>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container white">
+        <div class="row tabsProduct">
+            <ul class="nav nav-tabs ">
+                {% if product.overview %}
+                <li class="active">
+                    <a data-toggle="tab" href="#home">OVERVIEW</a>
+                </li>
+                {% endif %}
+                {% if product.features%}
+                <li>
+                    <a data-toggle="tab" href="#menu1">FEATURES </a>
+                </li>
+                {% endif %}
+                {% if product.tech_features%}
+                <li>
+                    <a data-toggle="tab" href="#menu2">TECHNICAL FEATURES</a>
+                </li>
+                {% endif %}
+                {% if product.benefits%}
+                <li>
+                    <a data-toggle="tab" href="#menu3">BENEFITS</a>
+                </li>
+                {%  endif %}
+                {% if product.images %}
+                <li>
+                    <a data-toggle="tab" href="#menu4">Clinical Image Gallery</a>
+                </li>
+                {% endif %}
+            </ul>
+            <div class="tab-content">
+                {% if product.overview %}
+                <div id="home" class="tab-pane fade in active">
+                {{product.overview|safe}}
+                </div>
+                {% endif %}
+                {% if product.features %}
+                <div id="menu1" class="tab-pane fade">
+                    {{product.features|safe}}
+                </div>
+                {% endif %}
+                {% if product.tech_features %}
+                <div id="menu2" class="tab-pane fade">
+                    <table class="table table-striped">
+                        {% for feature in product.tech_features %}
+                        <tr>
+                            <td>{{feature.feature.name}}</td>
+                            <td>{{feature.value}}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                    
+                </div>
+                {% endif %}
+                {% if product.benefits %}
+                <div id="menu3" class="tab-pane fade">
+                    {{product.benefits|safe}}
+                </div>
+                {% endif %}
+                {% if product.images %}
+                <div id="menu4" class="tab-pane fade">
+                    <ul class="product-gallery">
+                        {% for image in product.images %}
+                            <li>
+                                <img alt="{{image.alt}}" src="{{image.image}}">
+                                <p class="texti">{{image.alt}}</p>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="container white product_carousel">
+        <h2>Related
+            <strong>Products</strong>
+            <span class="grbdr" style="width:8%;"></span>
+        </h2>
+
+        <div class="carousel slide" id="myCarousel">
+            <div class="carousel-inner">
+                <div class="item active">
+                    <ul class="thumbnails">
+                        {% for item in related_products.results %}
+                        <li class="col-sm-3">
+                            <div class="fff">
+                                <div class="thumbnail">
+                                    <a href="{% url 'product_detail' slug=item.slug%}"><img style="height:158px" src="{{item.main_image}}" alt=""></a>
+                                    <a href="{% url 'product_detail' slug=item.slug%}">
+                                    <div class="overlay">
+                                        <div class="text">{{item.name}}</div>
+                                    </div>
+                                    </a>
+                                </div>
+                                <p>{{item.name}}</p>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <!--<nav>
+                <ul class="control-box pager">
+                    <li>
+                        <a data-slide="prev" href="#myCarousel" class=""><i class="next "></i></a>
+                    </li>
+                    <li>
+                        <a data-slide="next" href="#myCarousel" class=""><i class=" previous"></i></a>
+                    </li>
+                </ul>
+            </nav>-->
+        </div>
+        <!-- /#myCarousel -->
+    </div>
+    <!-- /.col-xs-12 -->
+</div>
+<!--<div class="compare_div">
+
+<h2>Compare Products</h2>
+
+
+<ul>
+  
+<li><img src="images/image_small.jpg" alt=""> <span>GE Signa Echospeed LX 1.5T MRI</span> </li>
+<li><img src="images/image_small1.jpg" alt=""> <span>GE Signa HDxt 1.5T MRI</span> </li>
+
+
+</ul>
+
+<div class="green_button compare"><a href="#"><i></i>Compare</a></div>
+
+
+
+</div>-->
+{% include "shared/modals/mymodal.html"%}
+{% endblock body %}

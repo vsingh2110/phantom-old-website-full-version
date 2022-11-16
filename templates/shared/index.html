@@ -1,0 +1,297 @@
+{% extends "shared/baselayout.html" %}
+{% load static from staticfiles %}
+{% block css %}
+    <link type="text/css" rel="stylesheet" href="{% static 'css/animated-slider.css' %}" />
+{% endblock css %}
+{% block js %}
+<script type="text/javascript">
+        $('.download-btn').on('click',function(e){
+            e.preventDefault();
+            var url = $(this).attr('href');
+            if(url){
+                window.leadcallback = function(){
+                    window.location.href=url;
+                    window.leadcallback=null;
+                }
+            }
+            if(hasSubmittedLead()){
+                window.leadcallback()
+            }
+            else{
+                $('#myModal').modal('show');
+            }
+        }); 
+//    $(document).ready(function() {
+//        // Header Scroll
+//        $(window).on('scroll', function() {
+//            var scroll = $(window).scrollTop();
+//
+//            if (scroll >= 50) {
+//                $('.navbar').addClass('navbar-color');
+//            } else {
+//                $('.navbar').removeClass('navbar-color');
+//            }
+//        });
+//
+//    });
+</script>
+<script type="text/javascript">
+    function reset_video_container(){
+        if($(window).innerWidth() < 800){
+            $('#video-container').hide();
+        }
+        else{
+            $('#video-container').show();
+        }
+    }
+    reset_video_container();
+    $(window).resize(reset_video_container)
+//    $('#myCarousel').carousel();
+//    var winWidth = $(window).innerWidth();
+//    $(window).resize(function() {
+//
+//        if ($(window).innerWidth() < winWidth) {
+//            $('.carousel-inner>.item>img').css({
+//                'min-width': winWidth,
+//                'width': winWidth
+//            });
+//        } else {
+//            winWidth = $(window).innerWidth();
+//            $('.carousel-inner>.item>img').css({
+//                'min-width': '',
+//                'width': ''
+//            });
+//        }
+//    });
+</script>
+<script>
+    $(function() {
+        $("#mySlider1").AnimatedSlider({
+            prevButton: "#btn_prev1",
+            nextButton: "#btn_next1",
+            visibleItems: 3,
+            infiniteScroll: true,
+            willChangeCallback: function(obj, item) {
+                $("#statusText").text("Will change to " + item);
+            },
+            changedCallback: function(obj, item) {
+                $("#statusText").text("Changed to " + item);
+            }
+        });
+
+
+        $("#mySlider2").AnimatedSlider({
+            prevButton: "#btn_prev2",
+            nextButton: "#btn_next2",
+            visibleItems: 5,
+            infiniteScroll: true,
+            willChangeCallback: function(obj, item) {
+                $("#statusText").text("Will change to " + item);
+            },
+            changedCallback: function(obj, item) {
+                $("#statusText").text("Changed to " + item);
+            }
+        });
+    });
+</script>
+<script type="text/javascript">
+//    $(document).ready(function() {
+//
+//        $(".btn").click(function() {
+//
+//            $("#myModal").modal('show');
+//            $("#Modalbuy").modal('show');
+//            $("#Modalsell").modal('show');
+//            $("#Modalpart").modal('show');
+//            $("#Modalservice").modal('show');
+//
+//
+//        });
+//
+//    });
+</script>
+{% endblock js %}
+{% block body %}
+{% if homepagebanner.results %}
+<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="5000">
+<ol class="carousel-indicators">
+    {% for item in homepagebanner.results%}
+    <li data-target="#myCarousel" data-slide-to="{{forloop.counter|add:'-1'}}" class="{%if forloop.counter == 2%}active{% endif%}" contenteditable="false"></li>
+    {% endfor %}
+</ol>
+ <div class="carousel-inner">
+    {% for item in homepagebanner.results%}
+    <div class="item {%if forloop.counter == 2%}active{% endif%}" style="">
+        <img src="{{item.image}}" alt="" class="hidden-xs">
+        <div class="text-carousel">
+            <div class="carousel-caption">
+                <h4 class="productname">{{item.title}}</h4>
+                <p class="Pdetail">
+                    {{item.short_description | safe}}
+                    {% if item.link %}
+                     <a href="{{item.link|safe}}">Click Here</a>
+                    {% endif %}
+                    </p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+</div>
+{% endif %}
+<div class="container-fluid">
+<div class="row installation">Looking for info on MRI Installation
+    <a href="#myModal" role="button" class="green_button"
+    data-toggle="modal">Click Here !</a>
+    <a href="#comingsoonModal" role="button" class="green_button"
+    data-toggle="modal">Buy Online</a>
+</div>
+</div>
+<div class="container">
+<div class="row about">
+    <div class="col-sm-8 col-ld-8 col-xs-12">
+        <h2>About
+            <strong>PHANTOM Healthcare</strong>
+            <span class="grbdr"></span>
+        </h2>
+        {{header.texts.about_text|striptags|truncatechars:500}}
+        <a href="{% url 'about' %}">Read more</a>
+    </div>
+    <div class="col-sm-4 col-ld-4 col-xs-12">
+        <a href="{% url 'post_list' %}"><span class="news"></span></a>
+        {% if brochure %}
+        <a class="download-btn" href="{{brochure.url}}"><span class="download"></span></a>
+        {% endif %}
+    </div>
+</div>
+</div>
+<div class=" container-fluid grey">
+<div class=" container">
+    <ul class="row">
+        <li class=" buisness">
+            <a href="#Modalbuy" class="whitebox" data-toggle="modal"><span class="buy"></span><h4>BUY</h4>
+            <p>
+                {{header.texts.buycard_text|striptags}}
+            </p></a>
+        </li>
+        <li class="buisness">
+            <a href="#Modalsell" class="whitebox" data-toggle="modal"><span class="sell"></span><h4>SELL</h4><p>{{header.texts.sellcard_text|striptags}}</p></a>
+        </li>
+        <li class=" buisness">
+            <a href="#Modalpart" class="whitebox" data-toggle="modal"><span class="part"></span><h4>PARTS</h4><p>{{header.texts.partscard_text|striptags}}</p></a>
+        </li>
+        <li class="buisness">
+            <a href="#Modalservice" class="whitebox" data-toggle="modal"><span class="services"></span><h4>SERVICES</h4><p>{{header.texts.servicecard_text|striptags}}</p></a>
+        </li>
+    </ul>
+</div>
+</div>
+{% if homepagevideo.results %}
+<div class=" container" id="video-container">
+<div class="row">
+    <div class="main-container col-sm-9 col-xs-12">
+        <h2>{{header.texts.videoslider_title_text|striptags}}</h2>
+        <p>{{header.texts.videoslider_text|striptags}}</p>
+        <div class="outer_pad">
+            <div class="choose_slider">
+                <div class="choose_slider_items">
+                    <ul id="mySlider1">
+                        {% for video in homepagevideo.results %}
+                        <li class="current_item">
+                        <iframe width="560" height="300" src="{{video.youtube_url}}" frameborder="0" allowfullscreen></iframe>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div>
+            <a id="btn_next1" href="#" class="next_slider"></a>
+        </div>
+        <div>
+            <a id="btn_prev1" href="#" class="previous_slider"></a>
+        </div>
+    </div>
+</div>
+</div>
+{% endif %}
+<!-- Testimonial Section Start -->
+{% if testimonials.results%}
+<div id="testimonial" class="section">
+<div class="container">
+    <div class="row">
+        <div class="touch-slider" class="owl-carousel owl-theme">
+            {% for testimonial in testimonials.results%}
+            <div class="item text-center{% if forloop.counter == 1%} active{% endif %}">
+                <img class="img-member" src="{{testimonial.image}}" alt="">
+                <div class="client-info">
+                    <h2 class="client-name">{{testimonial.author_name}}
+                        {% if testimonial.author_title%}
+                        <span>({{testimonial.author_title}})</span>
+                        {% endif %}
+                    </h2>
+                </div>
+                <p>{{testimonial.comment}}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+</div>
+{% endif %}
+<!-- Testimonial Section End -->
+<!-- Client sectionstarts -->
+{% comment %}
+<!--<div class="container">
+  <div class="row">
+      <div class=" col-sm-12 col-xs-12">
+          <h2 style="width:250px;">Our
+              <strong>Clients</strong>
+              <span class="grbdr"></span>
+          </h2>
+          <ul class="clients">
+              <li class="col-sm-2">
+                  <img src="{% static 'images/img1.png' %}" alt="">
+              </li>
+              <li class="col-sm-2">
+                  <img src="{% static 'images/img1.png' %}" alt="">
+              </li>
+              <li class="col-sm-2">
+                  <img src="{% static 'images/img1.png' %}" alt="">
+              </li>
+              <li class="col-sm-2">
+                  <img src="{% static 'images/img1.png' %}" alt="">
+              </li>
+              <li class="col-sm-2">
+                  <img src="{% static 'images/img1.png' %}" alt="">
+              </li>
+              <li class="col-sm-2">
+                  <img src="{% static 'images/img1.png' %}" alt="">
+              </li>
+          </ul>
+      </div>
+  </div>
+</div>-->
+{% endcomment %}
+<!-- Modal -->
+{% include "shared/modals/mymodal.html"%}
+{% include "shared/modals/buymodal.html"%}
+{% include "shared/modals/sellmodal.html"%}
+{% include "shared/modals/partsmodal.html"%}
+{% include "shared/modals/servicemodal.html"%}
+<div id="comingsoonModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Buy Online</h4>
+            </div>
+            <div class="modal-body">
+                <p>Coming Soon</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}
+

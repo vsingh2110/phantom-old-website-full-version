@@ -1,0 +1,114 @@
+{% extends "shared/baselayout.html" %}
+{% load static from staticfiles %}
+
+{% block js %}
+<script>
+  function activateTab(){
+      var serviceacc = $("#service-accordion");
+      serviceacc.on('hidden.bs.collapse',function($event){
+          $($event.target).prev('.card-header').find('span').text('+');
+      });
+      serviceacc.on('show.bs.collapse',function($event){
+          $($event.target).prev('.card-header').find('span').text('-');
+      });
+      var hash = window.location.hash;
+      var div;
+      if(hash){
+          div = $("[data-hash='"+hash.substr(1)+"']",serviceacc)
+      }
+      else{
+          div = $('.card',serviceacc).eq(0)
+      }
+      div.find('.acc-link').trigger('click');
+      if(hash){
+        setTimeout(function(){
+      $('html, body').animate({
+                scrollTop: $(div).offset().top-50
+            }, 500);
+        },400)
+      }
+  } 
+    $(document).ready(function() {
+      activateTab()
+    })
+    $(window).on('hashchange', function() {
+        activateTab();
+    });
+  </script>
+
+{% endblock js %}
+{% block body %}
+<!-- Breadcrum Starts-->
+<div class="container-fluid Breadcrum">
+    <div class="container">
+        <div class="row">
+            <h1 class="col-sm-5 col-ld-5 col-xs-12">PHANTOM Healthcare
+                <span class="caret_down"></span>
+            </h1>
+            <ul class="col-sm-5 col-ld-5 col-xs-12">
+                <li>
+                    <a href="{% url 'index' %}">Home  </a>
+                </li>/ Why Us</ul>
+        </div>
+    </div>
+</div>
+<!-- Breadcrum ends-->
+<div class="container-fluid greybg">
+    <div class="container white">
+        <div class="row">
+            <div class="col-sm-12 col-ld-12 col-xs-12 productImage">
+                <h2>Why
+                    <strong>PHANTOM Healthcare</strong>
+                    <span class="grbdr" style="width:15%;"></span>
+                </h2>
+                <div id="service-accordion" role="tablist" aria-multiselectable="true">
+                {% for service in services.results %}
+                  <div class="card" data-hash="{{service.slug}}">
+                      <div class="card-header" role="tab" id="heading{{ forloop.counter }}">
+                          <h5 class="mb-0">
+                              <a data-toggle="collapse" class="acc-link" data-parent="#accordion" href="#collapse{{forloop.counter}}"
+                              aria-expanded="false" aria-controls="collapse{{forloop.counter}}">
+  {{service.name}}<span>+</span>
+  </a>
+                          </h5>
+                      </div>
+                      <div id="collapse{{forloop.counter}}" class="collapse" role="tabpanel" aria-labelledby="heading{{forloop.counter}}">
+                          <div class="card-block">{{service.description}}</div>
+                      </div>
+                  </div>
+                {% endfor %}
+                </div>
+            </div>
+        </div>
+      </div>
+    <div class=" container white">
+        <div class="col-sm-12 col-ld-12 col-xs-12 ">
+            <h2>Other
+                <strong>Facilities</strong>
+                <span class="grbdr" style="width:8%;"></span>
+            </h2>
+            <ul class="row">
+                <li class=" buisness">
+                    <a href="#Modalbuy" class="whitebox grbox" data-toggle="modal"><span class="buy"></span><h4>BUY</h4><p> Quisque id tellus quis risus vehicula vehicula ut turpis. In eros nulla, placerat vitae at, vehicula ut nunc. </p></a>
+                </li>
+                <li class="buisness">
+                    <a href="#Modalsell" class="whitebox grbox" data-toggle="modal"><span class="sell"></span><h4>SELL</h4><p> Quisque id tellus quis risus vehicula vehicula ut turpis. In eros nulla, placerat vitae at, vehicula ut nunc. </p></a>
+                </li>
+                <li class=" buisness">
+                    <a href="#Modalpart" class="whitebox grbox" data-toggle="modal"><span class="part"></span><h4>PARTS</h4><p> Quisque id tellus quis risus vehicula vehicula ut turpis. In eros nulla, placerat vitae at, vehicula ut nunc. </p></a>
+                </li>
+                <li class="buisness">
+                    <a href="#Modalservice" class="whitebox grbox" data-toggle="modal"><span class="services"></span><h4>SERVICES</h4><p> Quisque id tellus quis risus vehicula vehicula ut turpis. In eros nulla, placerat vitae at, vehicula ut nunc. </p></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- Client section End -->
+</div>
+{% include "shared/modals/mymodal.html"%}
+{% include "shared/modals/buymodal.html"%}
+{% include "shared/modals/sellmodal.html"%}
+{% include "shared/modals/partsmodal.html"%}
+{% include "shared/modals/servicemodal.html"%}
+
+{% endblock body %}

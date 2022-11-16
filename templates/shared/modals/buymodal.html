@@ -1,0 +1,90 @@
+<div id="Modalbuy" class="modal fade leadform-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Buy Equipment</h4>
+            </div>
+            <div class="modal-body">
+                <div>{{header.texts.buy_leadform_text|safe}}</div>
+                <form class="leadform">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-6 col-xs-12">
+                                <input type="text" class="form-control manditory" data-valid="not_empty" name="name" placeholder="Name*">
+                            </div>
+                            <div class="col-sm-6 col-xs-12">
+                                <input type="text" class="form-control manditory" name="email" data-valid="not_empty|email" placeholder="Email*">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 col-xs-12">
+                                <input type="text" class="form-control manditory" name="phone" data-valid="not_empty|cellnum" placeholder="Phone*">
+                            </div>
+                            <div class="col-sm-6 col-xs-12">
+                                <input type="text" name="buyer_budget" class="form-control manditory" data-valid="maxlen=20" placeholder="Budget">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 col-xs-12">
+                                <textarea name="address" class="form-control" rows="3" placeholder="Address"></textarea>
+                            </div>
+                            <div class="col-sm-6 col-xs-12">
+                                <textarea name="message" class="form-control" rows="3" placeholder="Message"></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 col-xs-12">
+                                <input type="text" data-auname="state" class="form-control" placeholder="State">
+                                <input type="hidden" name="state" class="form-control" placeholder="State">
+                            </div>
+                            <div class="col-sm-6 col-xs-12">
+                                <input type="text" data-auname="country" class="form-control" placeholder="Country">
+                                <input type="hidden" name="country" class="form-control" placeholder="Country">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 col-xs-12">
+                                <select class="form-control" name="buyer_urgency">
+                                    <option value="" disabled selected>When do you need the equipment?</option>
+                                    {% for urgency in leadchoices.buyer.urgency%}
+                                    <option value="{{urgency.0}}">{{urgency.1}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-sm-6 col-xs-12">
+                                <select name="buyer_facility" class="form-control">
+                                    <option value="" disabled selected>Facility</option>
+                                    {% for facility in leadchoices.buyer.facility%}
+                                    <option value="{{facility.0}}">{{facility.1}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 col-xs-12">
+                                <input type="text" class="form-control" name="buyer_manufacturer_details" placeholder="Manufacturer details">
+                            </div>
+                            <div class="col-sm-6 col-xs-12">
+                                <input type="text" class="form-control" name="buyer_model_details" placeholder="Model Details">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 col-xs-12">
+                              <p>What types of studies do you need a system to perform?</p>
+                            </div>
+                            <div class="col-sm-6 col-xs-12">
+                                <textarea name="buyer_studies_needed" class="form-control" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <input type="hidden" name="lead_type" value="buyer">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn green_button">Buy Now!</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

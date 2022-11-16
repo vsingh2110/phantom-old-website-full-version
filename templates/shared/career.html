@@ -1,0 +1,95 @@
+{% extends "shared/baselayout.html" %}
+{% load static from staticfiles %}
+<!-- Breadcrum Starts-->
+{% block js %}
+<script type="text/javascript">
+
+            $('.career-form').customValidator({
+                err_selector:'div',
+                customValidation:function(values,$form){
+                    if(!$('#resume',$form).get(0).files.length){
+                        return {'resume':'This field is mandatory'}
+                    }
+                    return false;
+                }
+            });
+</script>
+
+{% endblock js %}
+{% block body %}
+<div class="container-fluid Breadcrum">
+    <div class="container">
+        <div class="row">
+            <h1 class="col-sm-5 col-ld-5 col-xs-12">Careers
+                <span class="caret_down"></span>
+            </h1>
+            <ul class="col-sm-5 col-ld-5 col-xs-12">
+                <li>
+                    <a href="{% url 'index' %}">Home  </a>
+                </li>/ Careers</ul>
+        </div>
+    </div>
+</div>
+<!-- Breadcrum ends-->
+<div class="container-fluid greybg">
+    <div class="container white">
+        <div class="row">
+            <div class="col-sm-12 col-ld-12 col-xs-12">
+               {{header.texts.career_text|safe}} 
+            </div>
+        </div>
+    </div>
+    <div class="container white">
+        <div class="row">
+            <div class="col-sm-12 col-ld-12 col-xs-12 contact" style="padding-top:50px;"></div>
+            {% if success_message %}
+            <div class="col-sm-6 col-ld-6 col-xs-12 contact">
+                <strong>Thank You for your interest. We will get in touch with you soon.</strong>
+            </div>
+            
+            {% else %}
+            <div class="col-sm-6 col-ld-6 col-xs-12 contact">
+                <strong>Please Tell us about you.</strong>
+                <br/>
+                <br/>
+                <form method="post" enctype="multipart/form-data"class="form-horizontal career-form">
+                    <div class="form-group">
+                        <div class="col-sm-10">
+                            <input type="text" name="name" class="form-control manditory" data-valid="not_empty" id="name" placeholder="Name*">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control manditory" id="email" data-valid="not_empty|email" name="email" placeholder="Email*">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control manditory" id="phone" data-valid="not_empty|cellnum" name="phone" placeholder="Mobile*">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-10">
+                            Resume* <input id="resume" class="form-control manditory" type="file" name="resume">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-10">
+                            <textarea class="form-control" name="message" id="exampleTextarea" rows="3" placeholder="Introduce yourself"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class=" col-sm-10">
+                            <button type="submit" class="btn green_button">Submit</button>
+                        </div>
+                    </div>
+            </form>
+            </div>
+            {% endif %}
+            <div class="col-sm-6 col-ld-6 col-xs-12 ADDRESS">
+                {{header.texts.address_info|safe}}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}

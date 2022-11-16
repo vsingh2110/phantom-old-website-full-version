@@ -1,0 +1,58 @@
+{% extends "shared/baselayout.html" %}
+{% load static from staticfiles %}
+{% block css %}
+
+{% endblock css %}
+{% block js %}
+<script type="text/javascript">
+    function activateTab(hash) {
+        var hash = hash || window.location.hash
+        if (hash) {
+            $(hash).modal('show');
+        }
+    }
+    activateTab()
+    $(document).ready(function () {
+        //        $(".btn").click(function() {
+        //            $("#quality-tab").modal('show');
+        //            $("#refurbishing-tab").modal('show');
+        //            $("#pan-tab").modal('show');
+        //            $("#finance-tab").modal('show');
+        //        });
+
+    });
+    $(window).on('hashchange', function () {
+        activateTab();
+    });
+    $('.menu-hash').on('click', function () {
+        var tab = $(this).data('tab');
+        activateTab('#' + tab);
+    });
+</script>
+{% endblock js %}
+{% block body %}
+<!-- Breadcrum Starts-->
+<div class="container-fluid Breadcrum">
+    <div class="container">
+        <div class="row">
+            <h1 class="col-sm-5 col-ld-5 col-xs-12">Privacy Policy
+                <span class="caret_down"></span>
+            </h1>
+            <ul class="col-sm-5 col-ld-5 col-xs-12">
+                <li>
+                    <a href="{% url 'index' %}">Home </a>
+                </li>/ Privacy Policy
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- Breadcrum ends-->
+<div class="container-fluid greybg">
+    <div class="container white">
+        <div class="row">
+            <div class="col-sm-12 col-ld-12 col-xs-12 productImage" style="padding-left:30px;">
+                {{header.texts.privacy_policy|safe}}
+            </div>
+        </div>
+    </div>
+    {% endblock body %}

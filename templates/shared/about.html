@@ -1,0 +1,209 @@
+{% extends "shared/baselayout.html" %}
+{% load static from staticfiles %}
+{%  block css %}
+
+{% endblock css %}
+{% block js %}
+<script type="text/javascript">
+    function activateTab(hash){
+        var hash = hash || window.location.hash
+        if(hash){
+            $(hash).modal('show');
+        }
+    }
+    activateTab()
+    $(document).ready(function() {
+//        $(".btn").click(function() {
+//            $("#quality-tab").modal('show');
+//            $("#refurbishing-tab").modal('show');
+//            $("#pan-tab").modal('show');
+//            $("#finance-tab").modal('show');
+//        });
+
+    });
+    $(window).on('hashchange', function() {
+        activateTab();
+    });
+    $('.menu-hash').on('click',function(){
+        var tab = $(this).data('tab');
+        activateTab('#'+tab);
+    });
+</script>
+{% endblock js %}
+{% block body %}
+<!-- Breadcrum Starts-->
+<div class="container-fluid Breadcrum">
+    <div class="container">
+        <div class="row">
+            <h1 class="col-sm-5 col-ld-5 col-xs-12">About Us
+                <span class="caret_down"></span>
+            </h1>
+            <ul class="col-sm-5 col-ld-5 col-xs-12">
+                <li>
+                    <a href="{% url 'index' %}">Home  </a>
+                </li>/ About Us</ul>
+        </div>
+    </div>
+</div>
+<!-- Breadcrum ends-->
+<div class="container-fluid greybg">
+    <div class="container white">
+        <div class="row">
+            <div class="col-sm-12 col-ld-12 col-xs-12 productImage" style="padding-left:30px;">
+                <h2>About
+                    <strong>PHANTOM Healthcare</strong>
+                    <span class="grbdr" style="width:15%;"></span>
+                </h2>
+                {{header.texts.about_text|safe}}
+            </div>
+        </div>
+    </div>
+    {% if messages.results %}
+    <div class="container white">
+        <div class="row">
+            <div class="col-sm-12 col-ld-12 col-xs-12">
+                <h2>Our Message
+                    <span class="grbdr" style="width:10%;"></span>
+                </h2>
+                {% for message in messages.results %}
+                <div class="col-sm-12 col-ld-12 col-xs-12 client_testimonial">
+                    <img width="79px" height="100px" src="{{message.image}}" alt="">
+                    <p>{{message.comment}}</p>
+                    <name>{{message.author_name}}
+                        {% if message.author_title %}({{message.author_title}}){% endif %}</name>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    <div class="container white">
+        <div class="row">
+            <div class="col-sm-12 col-ld-12 col-xs-12 productImage">
+                <h2>Other
+                    <strong>Facilities</strong>
+                    <span class="grbdr" style="width:8%;"></span>
+                </h2>
+                <ul>
+                    <li class=" buisness">
+                        <a href="#quality-tab" class="whitebox grbox" data-toggle="modal"><span class="quality"></span><h4>Quality & Timely Delivery</h4><p>{{header.texts.quality_card_text|striptags}}</p></a>
+                    </li>
+                    <li class=" buisness">
+                        <a href="#refurbishing-tab" class="whitebox grbox" data-toggle="modal"><span class="refurbishing"></span><h4>Refurbishing</h4><p>{{header.texts.refurbishing_card_text|striptags}}</p></a>
+                    </li>
+                    <li class=" buisness">
+                        <a href="#pan-tab" class="whitebox grbox" data-toggle="modal"><span class="panindia"></span><h4>Pan India Presence</h4><p>{{header.texts.panindia_card_text|striptags}}</p></a>
+                    </li>
+                    <li class=" buisness">
+                        <a href="#finance-tab" class="whitebox grbox" data-toggle="modal"><span class="finance"></span><h4>Easy Financing</h4><p>{{header.texts.financing_card_text|striptags}}</p></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container white">
+        <div class="row">
+            <div class="col-sm-12 col-ld-12 col-xs-12">
+                <h2>What our
+                    <strong>Customers say</strong>
+                    <span class="grbdr" style="width:10%;"></span>
+                </h2>
+                {% for testimonial in testimonials.results %}
+                <div class="col-sm-6 col-ld-6 col-xs-12 client_testimonial">
+                    <img width="79px" height="100px" src="{{testimonial.image}}" alt="">
+                    <p>{{testimonial.comment}}</p>
+                    <name>{{testimonial.author_name}}
+                        {% if testimonial.author_title %}({{testimonial.author_title}}){% endif %}</name>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <!-- Client sectionstarts -->
+    <!--<div class="container white client">
+        <div class="row">
+            <div class=" col-sm-12 col-xs-12">
+                <h2 style="width:250px;">Our
+                    <strong>Clients</strong>
+                    <span class="grbdr"></span>
+                </h2>
+                <ul class="clients">
+                    <li class="col-sm-2">
+                        <img src="{% static 'images/img1.png' %}" alt="">
+                    </li>
+                    <li class="col-sm-2">
+                        <img src="{% static 'images/img1.png' %}" alt="">
+                    </li>
+                    <li class="col-sm-2">
+                        <img src="{% static 'images/img1.png' %}" alt="">
+                    </li>
+                    <li class="col-sm-2">
+                        <img src="{% static 'images/img1.png' %}" alt="">
+                    </li>
+                    <li class="col-sm-2">
+                        <img src="{% static 'images/img1.png' %}" alt="">
+                    </li>
+                    <li class="col-sm-2">
+                        <img src="{% static 'images/img1.png' %}" alt="">
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>-->
+    <!-- Client section End -->
+</div>
+<div class="clear"></div>
+<div id="quality-tab" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Quality Assurance</h4>
+            </div>
+            <div class="modal-body">
+                {{header.texts.quality_modal_text|safe}}
+            </div>
+        </div>
+    </div>
+</div>
+<div id="refurbishing-tab" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Refurbishing Process</h4>
+            </div>
+            <div class="modal-body">
+                {{header.texts.refurbishing_modal_text|safe}}
+            </div>
+        </div>
+    </div>
+</div>
+<div id="pan-tab" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">PAN-India Presence</h4>
+            </div>
+            <div class="modal-body">
+                {{header.texts.panindia_modal_text|safe}}
+            </div>
+        </div>
+    </div>
+</div>
+<div id="finance-tab" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Easy Financing</h4>
+            </div>
+            <div class="modal-body">
+                {{header.texts.financing_modal_text|safe}}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}
+

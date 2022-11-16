@@ -1,0 +1,109 @@
+<nav class="navbar navbar-default navbar-fixed-top navbar-color">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+            data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{% url 'index' %}"></a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="dropdown courses-dropdown">
+                    <a href="{% url 'index' %}">Home</a>
+                </li>
+                <li class="dropdown jobs-dropdown">
+                    <a href="{% url 'about' %}" class="dropdown-toggle" role="button"
+                    aria-haspopup="true" aria-expanded="false">About Us</a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="{% url 'about' %}">Company</a>
+                        </li>
+                        <li>
+                            <a class="menu-hash" data-tab="quality-tab" href="{% url 'about' %}#quality-tab">Quality Assurance</a>
+                        </li>
+                        <li>
+                            <a class="menu-hash" data-tab="refurbishing-tab" href="{% url 'about' %}#refurbishing-tab">Refurbishing Process</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="dropdown jobs-dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                    aria-haspopup="true" aria-expanded="false">Why Phantom</a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="menu-hash" data-tab="quality-tab" href="{% url 'about' %}#quality-tab">Quality Services</a>
+                        </li>
+                        <li>
+                            <a class="menu-hash" data-tab="pan-tab" href="{%url 'about'%}#pan-tab">PAN-India Presence</a>
+                        </li>
+                        <li>
+                            <a class="menu-hash" data-tab="finance-tab" href="{%url 'about'%}#finance-tab">Easy Financing</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="dropdown jobs-dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                    aria-haspopup="true" aria-expanded="false">Product</a>
+                    <ul class="dropdown-menu">
+                        {% for category,products in header.product_group %}
+                        <li class="dropdown-submenu">
+                            <a class="link" href="">{{category}}</a>
+                            <ul class="dropdown-menu">
+                              {% for product in products%}
+                              <li><a href="{% url 'product_detail' slug=product.slug%}">{{product.name}}</a></li>
+                              {% endfor %}
+                            </ul>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </li>
+                <li class="dropdown jobs-dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                    aria-haspopup="true" aria-expanded="false">Services</a>
+                    <ul class="dropdown-menu">
+                        {% for service in header.services.results %}
+                        <li>
+                            <a href="{% url 'service_list' %}#{{service.slug}}">{{service.name}}</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </li>
+                <li class="dropdown courses-dropdown">
+                    <a href="{% url 'contact' %}">Contact Us</a>
+                </li>
+                <li class="dropdown courses-dropdown">
+                    <a href="{% url 'careers' %}">Careers</a>
+                </li>
+                <li class="dropdown">
+                    <a href="http://phantomis.co.in/">Employee Login</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown" style="padding-top:15px;">
+          <form action="" class="search">
+            <input type="text" id="top-search" class="form-control input-sm" maxlength="64" placeholder="Search" />
+            <span class="search-icon"></span>
+          </form>
+                </li>
+                <!--<li class="dropdown call-dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                    aria-haspopup="true" aria-expanded="false"><span class="call-icon"></span></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="text-center" href="#"><strong>Call us:</strong> 0124 - 3955001 / 02</a>
+                        </li>
+                    </ul>
+                </li>-->
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+</nav>
+

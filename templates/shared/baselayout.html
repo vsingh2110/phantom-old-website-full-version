@@ -1,0 +1,261 @@
+{% load static from staticfiles %}
+{% load tojson from utility %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head
+        content must come *after* these tags -->
+    <title>Phantom Healthcare</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+    <!-- Bootstrap -->
+    <link type="text/css" href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+    <link type="text/css" href="{% static 'css/header-footer.css' %}" rel="stylesheet">
+    <link type="text/css" href="{% static 'css/inside.css' %}" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="{% static 'css/owl.carousel.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/owl.theme.css' %}" type="text/css">
+    <!--[if lte IE 8]>
+            <link type="text/css" rel="stylesheet" href="{% static 'css/ie8_fix.css' %}" />
+        <![endif]-->
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media
+        queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file://
+        -->
+    <!--[if lt IE]>
+            <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+            <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    {% block css %}{% endblock css %}
+    <style type="text/css">
+        .autocomplete-suggestions {
+            border: 1px solid #999;
+            background: #FFF;
+            overflow: auto;
+        }
+
+        .autocomplete-suggestion {
+            padding: 2px 5px;
+            white-space: nowrap;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .autocomplete-selected {
+            background: #F0F0F0;
+        }
+
+        .autocomplete-suggestions strong {
+            font-weight: normal;
+            color: #3399FF;
+        }
+
+        .autocomplete-group {
+            padding: 2px 5px;
+        }
+
+        .autocomplete-group strong {
+            display: block;
+            border-bottom: 1px solid #000;
+        }
+
+        .error input {
+            background-color: #f7f0f0;
+        }
+
+        .error .message {
+            position: absolute;
+            right: 16px;
+            top: 1px;
+            color: #fff;
+            background-color: rgba(218, 63, 63, 0.81);
+            padding: 2px 11px;
+        }
+
+        .service-pack ul>li {
+            list-style: disc;
+        }
+    </style>
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-105705360-1', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+</head>
+
+<body>
+
+
+    {% include "shared/navigation.html" %}
+    <!-- Main Content Here-->
+    {% block body %}{% endblock body %}
+
+    <div class="clear"></div>
+    <div class="container-fluid footer">
+        <div class="container">
+            <div class="row">
+                <div class=" col-sm-12 col-xs-12">
+                    <div class=" col-sm-8">
+                        <a href="#">Site Map</a>
+                        <a href="{% url 'policy' %}">Privacy Policy</a>
+                        <a href="#">FAQs</a>
+                        <a href="#">Terms & Conditions</a>
+                        <a href="{% url 'contact' %}">Contact Us</a>
+                    </div>
+                    <div class=" col-sm-4 col-xs-12">© PHANTOM Healthcare. All Rights reserved</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="call-us">
+        <a role="button">
+            <span class="call-icon"></span>
+            <p>Call us at</p>
+            <strong>+91-9899112423</strong>
+        </a>
+    </div>
+    {% include "shared/modals/callmodal.html"%}
+    {% comment %}
+    <div class="compare_div">
+        <h2>Compare Products</h2>
+        <ul>
+            <li>
+                <img src="{% static 'images/image_small.jpg' %}" alt="">
+                <span>GE Signa Echospeed LX 1.5T MRI</span>
+            </li>
+            <li>
+                <img src="{% static 'images/image_small1.jpg' %}" alt="">
+                <span>GE Signa HDxt 1.5T MRI</span>
+            </li>
+        </ul>
+        <div class="green_button compare">
+            <a href="#"><i></i>Compare</a>
+        </div>
+    </div>
+    {% endcomment %}
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.autocomplete.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.cssslider.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/owl.carousel.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/customvalidator.js' %}"></script>
+    <!-- Include all compiled plugins (below), or include individual
+        files as needed -->
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+    <script type="text/javascript">
+        $('.call-us').on('click', function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            if ($this.hasClass('show')) {
+                $this.removeClass('show');
+            }
+            else {
+                $this.addClass('show');
+                $('#callModal').modal('show');
+            }
+        });
+            //$('.nav-tabs > li > a').hover(function() {
+              //  $(this).tab('show');
+            //});
+//            $('.dropdown').hover(function() {
+//                $('.dropdown-toggle', this).trigger('click');
+//            });
+    </script>
+    <script>
+        ; (function () {
+            var products = {{ header.products.results| tojson | safe
+        }};
+        $('#top-search').autocomplete({
+            lookup: products,
+            onSelect: function (suggestion) {
+                window.location.href = '/product/' + suggestion.slug + '/';
+            }
+        });
+}) ();
+    </script>
+    <script>
+        var location_choices = {
+            country: [],
+            state: [],
+            city: []
+        }
+        {% if leadchoices.default.country %}
+        location_choices.country = {{ leadchoices.default.country | tojson | safe }};
+        {% endif %}
+        {% if leadchoices.default.states %}
+        location_choices.state = {{ leadchoices.default.states | tojson | safe }};
+        {% endif %}
+        {% if leadchoices.default.cities %}
+        location_choices.city = {{ leadchoices.default.cities | tojson | safe }};
+        {% endif %}
+
+        function sendLead(data) {
+            return $.ajax({
+                url: '/lead/create/?format=json',
+                type: 'post',
+                dataType: 'json',
+                data: data,
+                //contentType:'application/json'
+            });
+        }
+        ; (function () {
+            function bindAutocomplete() {
+                $('[data-auname]', '.leadform').each(function (index, el) {
+                    var $el = $(el)
+                    var type = $el.data('auname');
+                    $el.autocomplete({
+                        lookup: location_choices[type],
+                        onSelect: function (suggestion) {
+                            $el.next().val(suggestion.slug);
+                        }
+                    });
+
+                });
+            }
+            $('.leadform').customValidator({
+                err_selector: 'div',
+                onvalidform: function (values, $form, submitIt) {
+                    var data = formToJSON($form[0])
+                    sendLead(data).done(function () {
+                        submittedLead();
+                        alert('Thanks for contacting us. We will get in touch with you shortly');
+                        if (window.leadcallback) {
+                            window.leadcallback();
+                            window.leadcallback = null
+                        }
+                    })
+                        .fail(function () {
+                            alert('Something went wrong. Please try again.')
+                            submitIt(false);
+                        });
+                },
+            });
+            $('.leadform-modal').on('shown.bs.modal', function () {
+                var $this = $(this);
+                var oldcallback = window.leadcallback;
+                window.leadcallback = function () {
+                    $this.modal('hide');
+                    if (oldcallback) { oldcallback(); }
+                }
+            }).on('hidden.bs.modal', function () {
+                window.leadcallback = null;
+            });
+            bindAutocomplete();
+        })();
+
+
+    </script>
+    {% block js %}{% endblock js %}
+</body>
+
+</html>

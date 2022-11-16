@@ -1,0 +1,61 @@
+{% extends "shared/baselayout.html" %}
+{% load static from staticfiles %}
+{% load get_item na_on_none from utility %}
+{%  block css %}
+    <link type="text/css" href="{% static 'css/college-compare-widget.css'%}" rel="stylesheet">
+{% endblock css %}
+{% block js %}
+      <script type="text/javascript" src="{% static 'js/store.min.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/comparebox.js' %}"></script>
+      <script>
+        CompareBox.loaddata();
+
+      </script>
+
+{% endblock js%}
+
+{% block body %}
+<!-- Breadcrum Starts-->
+<div class="container-fluid Breadcrum">
+    <div class="container">
+        <div class="row">
+            <h1 class="col-sm-5 col-ld-5 col-xs-6">Comparison
+                <span class="caret_down"></span>
+            </h1>
+            <ul class="col-sm-5 col-ld-5 col-xs-6">
+                <li>
+                    <a href="{% url 'index' %}">Home  </a>
+                </li>/ Product Comparison</ul>
+        </div>
+    </div>
+</div>
+<!-- Breadcrum ends-->
+<div class="container-fluid greybg" style="min-height:510px">
+    <div class="container white">
+        <div class="row">
+            <table class="table productcomparison">
+                <thead>
+                    <tr>
+                        <th class="col-sm-5 col-ld-5 ">Features</th>
+                        {% for product in products %}
+                        <th class="col-sm-2 col-ld-2 ">{{product.name}}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for feature in features %}
+                    <tr>
+                        <td class="col-sm-5 col-ld-5 ">{{feature.name}}</td>
+                        {% for product in products %}
+                        <td class="col-sm-2 col-ld-2 ">
+                          {{product | get_item:feature.slug | na_on_none}}
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock body %}

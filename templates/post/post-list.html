@@ -1,0 +1,76 @@
+{% extends "shared/baselayout.html" %}
+{% load static from staticfiles %}
+{% load date_filter %}
+{%  block css %}
+
+{% endblock css %}
+{% block js %}
+
+{% endblock js %}
+{% block body %}
+<div class="container-fluid Breadcrum">
+    <div class="container">
+        <div class="row">
+            <h1 class="col-sm-5 col-ld-5 col-xs-12">News and Events
+                <span class="caret_down"></span>
+            </h1>
+            <ul class="col-sm-5 col-ld-5 col-xs-12">
+                <li>
+                    <a href="{% url 'index' %}">Home  </a>
+                </li>/ News and Events</ul>
+        </div>
+    </div>
+</div>
+<!-- Breadcrum ends-->
+<div class="container-fluid greybg">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-9 col-ld-9 col-xs-12  white">
+                {% for post in posts.results %}
+                <div class="row">
+                    <div class="col-sm-2 col-ld-2 hidden-xs ">
+                        <div class="calender">{{post.publish_date | date_filter | date:"N"}}
+                            <date>{{post.publish_date | date_filter | date:"d"}}</date>
+                        </div>
+                    </div>
+                    <div class="col-sm-10 col-ld-10 col-xs-12 events">
+                        {% if post.top_image %}
+                        <img src="{{post.top_image}}" alt="" class="img-responsive " />
+                        {% endif %}
+                        <a href="{% url 'post_detail' slug=post.slug %}"><strong>{{post.title}}</strong></a>
+                        <p>{{post.summary}}</p>
+                        <div class="bdr_gry"></div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="col-sm-3 col-ld-3 col-xs-12 greybg recent">
+                <strong>RECENT POSTS</strong>
+                <ul>
+                    {% for post in recent_posts.results %}
+                    <li>
+                        <a href="{% url 'post_detail' slug=post.slug %}">{{post.title}}</a>
+                        <date>{{post.publish_date|date_filter|date:"d M Y"}}</date>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <!--<div class="ARCHIVE">
+                <strong>ARCHIVE</strong>
+                <ul>
+                    <li>
+                        <a href="#">2013</a>
+                    </li>
+                    <li>
+                        <a href="#">2012</a>
+                    </li>
+                    <li>
+                        <a href="#">2011</a>
+                    </li>
+                </ul>
+            </div>-->
+        </div>
+    </div>
+</div>
+
+{% endblock body %}
